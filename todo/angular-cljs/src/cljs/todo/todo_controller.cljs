@@ -1,21 +1,9 @@
 (ns todo.todo-controller
-  (:use [clojure.string :only [blank?]]))
-
-(defn oset!
-  [obj & kvs]
-  (doseq [[k v] (partition 2 kvs)]
-    (aset obj (name k) v)))
-
-;;Why isn't this in cljs by default?
-;;Probably some great reasons...
-(extend-type object
-  ILookup
-  (-lookup
-    ([o k]
-       (aget o (name k)))
-    ([o k not-found]
-       (if-let [res (aget o (name k))]
-         res not-found))))
+  (:refer-clojure :exclude [assoc!
+                            map filter remove])
+  (:require [todo.util :refer [assoc! update-in!
+                               map filter remove]]
+            [clojure.string :refer [blank?]]))
 
 (def todomvc
   "Create a TodoMVC module within Angular.js"
@@ -45,48 +33,50 @@
   (.$watch $scope "todos"
            (fn [todos]
              (.set todoStorage todos)
-             (oset! $scope
-                    :doneCount (count (filter :completed todos))
-                    :remainingCount (count (remove :completed todos))
-                    :allChecked (every? :completed todos)))
+             (assoc! $scope
+                     :doneCount (count (filter :completed todos))
+                     :remainingCount (count (remove :completed todos))
+                     :allChecked (every? :completed todos)))
            true)
-  
+
   (.$watch $scope "location.path()"
            (fn [path]
-             (oset! $scope :statusFilter
-                    (case path
-                      "/active" #(not (:completed %))
-                      "/completed" #(:completed %)
-                      nil)))
+             (assoc! $scope :statusFilter
+                     (case path
+                       "/active" #(not (:completed %))
+                       "/completed" #(:completed %)
+                       nil)))
            true)
 
   (when (blank? (.path $location))
     (.path $location "/"))
 
-  (oset! $scope
-         :todos (.get todoStorage)
-         :location $location
-         :addTodo #(when-not (blank? (.-newTodo $scope))
-                     (.push (.-todos $scope) (js-obj "title" (.-newTodo $scope)
+  (assoc! $scope
+          :todos (.get todoStorage)
+          :location $location
+          :addTodo #(when-not (blank? (:newTodo $scope))
+                      (conj! (:todos $scope) (js-obj "title" (:newTodo $scope)
                                                      "completed" false))
-                     (oset! $scope :newTodo ""))
+                      (assoc! $scope :newTodo ""))
 
-         :editTodo (fn [todo] (oset! $scope :editedTodo todo))
+          :editTodo (fn [todo] (assoc! $scope :editedTodo todo))
 
-         :removeTodo (fn [todo] (.splice (.-todos $scope) (.indexOf (.-todos $scope) todo) 1))
+          :removeTodo (fn [todo]
+                        (update-in! $scope [:todos]
+                                    (fn [todos] (remove #{todo} todos))))
 
-         :doneEditing (fn [todo]
-                        (oset! $scope :editedTodo nil)
-                        (when (blank? (.-title todo))
-                          (.removeTodo $scope todo)))
+          :doneEditing (fn [todo]
+                         (assoc! $scope :editedTodo nil)
+                         (when (blank? (:title todo))
+                           (.removeTodo $scope todo)))
 
-         :clearDoneTodos (fn []
-                           (oset! $scope :todos
-                                  (.filter (.-todos $scope) #(not (:completed %)))))
+          :clearDoneTodos (fn []
+                            (update-in! $scope [:todos]
+                                        (fn [todos] (remove :completed todos))))
 
-         :markAll (fn [done]
-                    (.forEach (.-todos $scope)
-                              #(oset! % :completed done)))))
+          :markAll (fn [done]
+                     (doseq [todo (:todos $scope)]
+                       (assoc! todo :completed done)))))
 
 
 (.controller todomvc "TodoCtrl" TodoCtrl)
