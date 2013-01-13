@@ -91,8 +91,10 @@
     ([o k]
        (aget o (strkey k)))
     ([o k not-found]
-       (if-let [res (aget o (strkey k))]
-         res not-found)))
+      (let [s (strkey k)]
+        (if (goog.object.containsKey o s)
+          (aget o s) 
+          not-found))))
 
   IEmptyableCollection
   (-empty [_]
