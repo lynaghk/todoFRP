@@ -10,23 +10,37 @@
 
 ;; UI state
 
-(def !editing
+(def !visible-todos
+  "Filtered todo list"
+  (atom []))
+
+(defn filter-todos [fltr todos]
+  (reset! !visible-todos
+    (vec (case fltr
+           :active    (remove :completed? todos)
+           :completed (filter :completed? todos)
+           :all todos))))
+
+(add-watch core/!todos  :filter-todos #(filter-todos @core/!filter %4))
+(add-watch core/!filter :filter-todos #(filter-todos %4 @core/!todos))
+
+(def !editing-todo
   "Currently edited item"
   (atom nil))
-
-(def !stats
-  "Numbers of todos by complete status"
-  (atom {}))
 
 (defn edit-todo!
   "Mark an item as currently being editing"
   [todo]
-  (reset! !editing todo))
+  (reset! !editing-todo todo))
 
 (defn quit-editing!
   "Finish editing"
   []
-  (reset! !editing nil))
+  (reset! !editing-todo nil))
+
+(def !stats
+  "Numbers of todos by complete status"
+  (atom {}))
 
 (add-watch core/!todos :calc-stats
   #(reset! !stats {:all (count %4)
@@ -61,7 +75,7 @@
     (when (= t editing) " editing")))
 
 (defwidget todo* [t]
-  [:li {:class (bound* [t !editing] todo-class)}
+  [:li {:class (bound* [t !editing-todo] todo-class)}
     [:div.view
       (wu/bound-checkbox "" "toggle -toggle" t :completed?)
       [:label (bound t :title)]
@@ -82,7 +96,7 @@
     (when (= :enter (wu/evt->key event))
       (core/save-todo! @t (.val input))
       (quit-editing!)))
-  (add-watch !editing (gensym "focus-editing")
+  (add-watch !editing-todo (gensym "focus-editing")
     #(when (= %4 @t) (focus-delayed input))))
 
 (defwidget todos* [todos]
@@ -126,7 +140,7 @@
     [:header#header
       [:h1 "todos"]
       (new-todo*)]
-    (todos* core/!visible-todos)
+    (todos* !visible-todos)
     (footer* core/!filter)])
 
 (defn render []

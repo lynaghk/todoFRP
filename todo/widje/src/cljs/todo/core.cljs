@@ -13,20 +13,6 @@
   "Which todo items should be displayed: all, active, or completed?"
   (atom :all))
 
-(def !visible-todos
-  "Filtered todo list"
-  (atom []))
-
-(defn filter-todos [fltr todos]
-  (reset! !visible-todos
-    (vec (case fltr
-           :active    (remove :completed? todos)
-           :completed (filter :completed? todos)
-           :all todos))))
-
-(add-watch !todos  :filter-todos #(filter-todos @!filter %4))
-(add-watch !filter :filter-todos #(filter-todos %4 @!todos))
-
 ;; Routing
 
 (defn update-filter!
