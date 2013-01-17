@@ -3,8 +3,7 @@
         [clojure.string :only [blank?]]
         [jayq.util :only [log]]))
 
-;;;;;;;;;;;;;;;;;;;;;
-;;Core application state
+;; State
 
 (def !todos
   "Todo list, implicitly key'd by :title"
@@ -18,16 +17,17 @@
   "Filtered todo list"
   (atom []))
 
-(def !stats
-  "Numbers of todos by complete status"
-  (atom {}))
+(defn filter-todos [fltr todos]
+  (reset! !visible-todos
+    (vec (case fltr
+           :active    (remove :completed? todos)
+           :completed (filter :completed? todos)
+           :all todos))))
 
-(def !editing
-  "Currently edited item"
-  (atom nil))
+(add-watch !todos  :filter-todos #(filter-todos @!filter %4))
+(add-watch !filter :filter-todos #(filter-todos %4 @!todos))
 
-;;;;;;;;;;;;;;;;;;;;;
-;;"Routing"
+;; Routing
 
 (defn update-filter!
   "Updates filter according to current location hash"
@@ -39,42 +39,18 @@
 
 (set! (.-onhashchange js/window) update-filter!)
 
-;;;;;;;;;;;;;;;;;;;
-;;Persistence
-
-(def ls-key "todos-widje")
-
-(defn save-todos! [_ _ _ todos]
-  (aset js/localStorage ls-key
-        (prn-str todos)))
+;; Persistence
 
 (defn load-todos! []
   (reset! !todos
-          (if-let [saved-str (aget js/localStorage ls-key)]
+          (if-let [saved-str (aget js/localStorage "todos-widje")]
             (read-string saved-str)
             [])))
 
-(add-watch !todos :save save-todos!)
+(add-watch !todos :save
+  #(aset js/localStorage "todos-widje" (prn-str %4)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Query/manipulate todos
-
-(defn filter-todos [fltr todos]
-  (reset! !visible-todos
-    (vec (case fltr
-           :active    (remove :completed? todos)
-           :completed (filter :completed? todos)
-           :all todos))))
-
-(add-watch !todos  :filter-todos #(filter-todos @!filter %4))
-(add-watch !filter :filter-todos #(filter-todos %4 @!todos))
-
-(defn calc-stats [_ _ _ todos]
-  (reset! !stats {:all (count todos)
-                  :completed (count (filter :completed? todos))
-                  :active (count (remove :completed? todos))}))
-
-(add-watch !todos :calc-stats calc-stats)
+;; Operations
 
 (defn clear-completed!
   "Remove completed items from the todo list."
@@ -88,11 +64,6 @@
   "Mark an item as (un)completed."
   [todo completed?]
   (replace-todo! todo (assoc todo :completed? completed?)))
-
-(defn edit-todo!
-  "Mark an item as currently being editing"
-  [todo]
-  (reset! !editing todo))
 
 (defn check-all!
   "Mark all items as (un)completed."
@@ -123,5 +94,4 @@
   [todo title]
   (if (= "" title)
     (clear-todo! todo)
-    (replace-todo! todo (assoc todo :title title)))
-  (reset! !editing nil))
+    (replace-todo! todo (assoc todo :title title))))
