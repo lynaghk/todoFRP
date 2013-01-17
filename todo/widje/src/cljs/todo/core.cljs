@@ -32,11 +32,12 @@
 (defn update-filter!
   "Updates filter according to current location hash"
   []
-  (let [[_ loc] (re-matches #"#/(\w+)" (.-hash js/location))]
-    (reset! !filter (keyword loc))))
+  (let [[_ loc] (re-matches #"#/(\w+)" (.-hash js/location))
+        loc (if (blank? loc) :all (keyword loc))]
+    (when-not (= @!filter loc)
+      (reset! !filter loc))))
 
 (set! (.-onhashchange js/window) update-filter!)
-
 
 ;;;;;;;;;;;;;;;;;;;
 ;;Persistence
@@ -58,12 +59,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Query/manipulate todos
 
-(defn filter-todos [filter todos]
+(defn filter-todos [fltr todos]
   (reset! !visible-todos
-    (case filter
-      :active    (remove :completed? todos)
-      :completed (filter :completed? todos)
-      todos)))
+    (vec (case fltr
+           :active    (remove :completed? todos)
+           :completed (filter :completed? todos)
+           :all todos))))
 
 (add-watch !todos  :filter-todos #(filter-todos @!filter %4))
 (add-watch !filter :filter-todos #(filter-todos %4 @!todos))

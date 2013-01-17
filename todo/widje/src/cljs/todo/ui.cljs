@@ -91,10 +91,11 @@
     (core/check-all! (checked? toggle))))
 
 (defwidget todos* []
-  [:section#main {:style (bound core/!todos #(when-not (seq %) "display: none;"))}
+  [:section#main {:style (bound core/!todos #(if (seq %) "" "display: none;"))}
     (toggle-all*)
     [:label {:for "toggle-all"} "Mark all as complete"]
-    [:ul#todo-list (bound-coll core/!visible-todos {:as todo*})]])
+    [:ul#todo-list (bound-coll core/!visible-todos {:as todo*})]
+    ])
 
 (defwidget new-todo* []
   [:input#new-todo.-input {:placeholder "What needs to be done?" :autofocus true}]
@@ -107,20 +108,20 @@
 (defwidget filters* []
   [:ul#filters
     (for [filter [:all :active :completed]]
-      [:li [:a {:class (bound core/!filter #(when (= filter %) "selected"))
+      [:li [:a {:class (bound core/!filter #(if (= filter %) "selected" ""))
                 :href (str "#/" (name filter))}
             (capitalize (name filter))]])]
   )
 
 (defwidget clear-button* []
-  [:button#clear-completed.-button {:style (bound core/!stats #(when (zero? (:completed %)) "display: none;"))}
+  [:button#clear-completed.-button {:style (bound core/!stats #(if (zero? (:completed %)) "display: none;" ""))}
     (bound core/!stats #(str "Clear completed (" (:completed %) ")"))]
   [button]
   (listen button :click
     (core/clear-completed!)))
 
 (defwidget footer* []
-  [:footer#footer {:style (bound core/!todos #(when-not (seq %) "display: none;"))}
+  [:footer#footer {:style (bound core/!todos #(if (seq %) "" "display: none;"))}
     [:span#todo-count
       [:b (bound core/!stats :active)]
       [:span (bound core/!stats #(str " " (pluralize "item" (:active %)) " left"))]]
