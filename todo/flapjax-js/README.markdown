@@ -3,6 +3,8 @@
 This TodoFRP implementation drives
 [Flapjax](http://www.flapjax-lang.org/) with plain JavaScript.
 
+You can check out a running demo over at [http://alandipert.github.com/todoFRP/flapjax-js/](http://alandipert.github.com/todoFRP/flapjax-js/).
+
 ## Storage
 
 Todos are persisted in localStorage as an array of `{id: <uuid>,
