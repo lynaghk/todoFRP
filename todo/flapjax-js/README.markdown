@@ -29,10 +29,8 @@ no mutable identities - only EventStreams and Behaviors.
 
 There are also no dynamically created Behaviors, and as a result,
 state change is fairly coarse-grained - it occurs at the level of the
-collection.  Finer-grained, dynamic behaviors may make the
-implementation more performant at the expense of increased complexity.
-Dynamic behaviors may also introduce memory leaks or other performance
-problems.
+collection.  I avoided dynamic behaviors because I think they would
+add more complexity than they'd remove.
 
 ## Routing
 
