@@ -14,7 +14,6 @@ The primary problems of frontend application development are:
 
 * The data-level DOM composes poorly with function-level application
   logic.  Markup is data, not meaning.
-
 * The complexity imposed by JavaScript's asynchronous semantics
   combined with the DOM event model.
 
@@ -25,7 +24,6 @@ an attempt to solve both problems, respectively:
   ClojureScript source code, and by providing semantics that make the
   resulting program composable with application logic at a clean,
   programmatic level.
-
 * Javelin manages mutation and event collection, and provides
   semantics for maintaining and updating application state in clean,
   dependency-ordered way using techniques inspired by the way
@@ -51,12 +49,10 @@ the application.
   creating elements or anything like that. The designer can change any element
   in the final page by editing `src/html/index.html`. The programmer doesn't
   ever need to touch this file.
-  
 * The FRP code that sets up the application state is all in the
   `src/include/index.cljs` file, which is spliced into the markup by the HLisp
   compiler via the `<include>` tag. The designer never needs to mess around in
   this file.
-
 * The programmer writes the FRP code in ClojureScript. This code encompasses
   the complete logical state machine that is the operational specification of
   the application. That is to say, the machinery that runs underneath the UI
@@ -64,21 +60,17 @@ the application.
   the machinery here does not include any templates, DOM elements, DOM-as-data
   ([hiccup](http://github.com/weavejester/hiccup), for example) or any other
   reference to the DOM in any way.
-
 * The programmer exposes and documents all FRP cells and state-mutating
   functions, and delivers the application to the designer. The programmer may
   even provide a simple wireframe as a starting point for the designer, if
   they like.
-
 * The designer codes the markup and styling as they see fit, using simple
   reactive behavior attributes to wire up the UI elements to the state machine.
   It is important to note that the designer does no programming here&mdash;all
   that is required is to declaritively wire individual, isolated elements in
   the markup to the exposed state machine cells and functions.
-
 * Unit tests can be written to fully exercise the FRP part separately, while
   still encompassing all operations required by the application specs.
-
 * Selenium or PhantomJS etc. can be used to exercise the UI separately from
   the FRP part.
 
