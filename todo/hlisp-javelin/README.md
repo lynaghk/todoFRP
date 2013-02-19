@@ -44,7 +44,7 @@ application.
   the application. That is to say, the machinery that runs underneath the UI
   (User Interface) and does the actual computing. It is worth noting that
   the machinery here does not include any templates, DOM elements, DOM-as-data
-  ([hicup](http://github.com/weavejester/hiccup), for example) or any other
+  ([hiccup](http://github.com/weavejester/hiccup), for example) or any other
   reference to the DOM in any way.
 
 * The programmer exposes and documents all FRP cells and state-mutating
