@@ -15,7 +15,10 @@ The primary problems inherent in frontend application development are:
 * **DOM-as-data** <br>
   The data-level DOM composes poorly with associated program-level
   application logic.  Markup-as-data has no meaning.  Programs are
-  more than just data&mdash;programs are _meaningful_ data.
+  more than just data&mdash;programs are _meaningful_ data. Extracting
+  elements from the DOM using selectors, manipulating hiccup data as
+  DOM fragments, templates, etc. are all as-data representations
+  completely devoid of meaning.
 
 * **Watchers and callbacks** <br>
   The complexity imposed by JavaScript's asynchronous semantics
