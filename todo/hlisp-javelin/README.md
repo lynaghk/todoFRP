@@ -1,6 +1,6 @@
 # TodoFRP
 
-An inplementation of [TodoMVC](http://todomvc.com) using
+An implementation of [TodoMVC](http://todomvc.com) using
 [HLisp](http://github.com/tailrecursion/hlisp-starter/) and
 [Javelin](http://github.com/tailrecursion/javelin/).
 
