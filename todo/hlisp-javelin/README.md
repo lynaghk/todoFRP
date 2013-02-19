@@ -98,7 +98,7 @@ maybe be boiled down to a single principle: all state is contained in the
 underlying FRP machinery, and never in the DOM&mdash;the DOM serves only to
 collect input from the user and convey to them output from the state machine.
 
-### Spreadsheets
+## Spreadsheets
 
 The connection between FRP-backed web applications and spreadsheets is
 interesting. Spreadsheets are perhaps the most accessible and successful
