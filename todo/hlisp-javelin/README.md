@@ -10,7 +10,7 @@ An inplementation of [TodoMVC](http://todomvc.com) using
 
 ## Overview
 
-The primary problems of frontend application development are:
+The primary problems inherent in frontend application development are:
 
 * The data-level DOM composes poorly with associated program-level
   application logic.  Markup is data, not meaning.  Programs are
