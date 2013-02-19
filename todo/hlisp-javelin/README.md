@@ -10,16 +10,34 @@ An inplementation of [TodoMVC](http://todomvc.com) using
 
 ## Overview
 
-Frontend development: there are many ways to skin this cat, and so far none
-of them seem to really provide the model we need. HLisp gives us a new model
-as a foundation for experimenting with different ways of building the frontend.
+The primary problems of frontend application development are:
+
+1. The data-level DOM composes poorly with function-level application
+   logic.  Markup is data, not meaning.
+
+2. The complexity imposed by JavaScript's asynchronous semantics
+   combined with the DOM event model.
+
+The combination of HLisp and Javelin used in this project represents
+an attempt to solve both problems, respectively:
+
+1. HLisp lifts markup to the function-level by compiling HTML as
+   ClojureScript source code, and by providing semantics that make the
+   resulting program composable with application logic at a clean,
+   programmatic level.
+
+2. Javelin manages mutation and event collection, and provides
+   semantics for maintaining and updating application state in clean,
+   dependency-ordered way using techniques inspired by the way
+   spreadsheets work.
 
 For this application I wrote the
-[hlisp-reactive](http://github.com/micha/hlisp-reactive/) library to tie
-HLisp and Javelin together. This library provides a macro that gives the
-designer the ability to attach reactive behaviors to elements in the
-markup, similar to [angularjs](http://angularjs.org). Javelin provides the
-FRP (Functional Reactive Programming) underpinnings.
+[hlisp-reactive](http://github.com/micha/hlisp-reactive/) library to
+tie HLisp and Javelin together. This library provides a macro that
+gives the designer the ability to attach reactive behaviors to
+elements in the markup, similar to
+[angularjs](http://angularjs.org). Javelin provides the FRP
+(Functional Reactive Programming) underpinnings.
 
 ## Workflow
 
