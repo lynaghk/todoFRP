@@ -12,7 +12,8 @@ An implementation of [TodoMVC](http://todomvc.com) using
 
 The primary problems inherent in frontend application development are:
 
-* **DOM-as-data** The data-level DOM composes poorly with associated program-level
+* **DOM-as-data**
+  The data-level DOM composes poorly with associated program-level
   application logic.  Markup-as-data has no meaning.  Programs are
   more than just data&mdash;programs are _meaningful_ data.
 * The complexity imposed by JavaScript's asynchronous semantics
