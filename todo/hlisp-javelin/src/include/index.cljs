@@ -4,10 +4,10 @@
     [hlisp.reactive.macros        :refer [reactive-attributes]]
     [tailrecursion.javelin.macros :refer [cell]])
   (:require
-    [hlisp.reactive               :as d]
+    [hlisp.reactive         :as d :refer [thing-looper]]
     [hlisp.util                   :refer [pluralize]]
-    [tailrecursion.javelin        :as j]
-    [alandipert.storage-atom      :as sa]))
+    [tailrecursion.javelin        :refer [route*]]
+    [alandipert.storage-atom      :refer [local-storage]]))
 
 ;; internal ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -34,13 +34,13 @@
 
 ;; public ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(def state        (sa/local-storage (cell dfl-state) ::store))
-(def route        (j/route* 50 "#/")) 
+(def state        (local-storage (cell dfl-state) ::store))
+(def route        (route* 50 "#/")) 
 (def editing-new  (cell "")) 
 (def live-ones    (cell (filter (complement deleted?) state))) 
 (def completed    (cell (filter completed? live-ones))) 
 (def active       (cell (filter (complement completed?) live-ones)))
-(def loop-todos   (d/thing-looper state cellvals)) 
+(def loop-todos   (thing-looper state cellvals)) 
 
 (defn new-item! [text]
   (if (not (empty? text))
