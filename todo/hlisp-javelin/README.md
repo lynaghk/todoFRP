@@ -21,10 +21,11 @@ The primary problems inherent in frontend application development are:
 The combination of HLisp and Javelin used in this project represents
 an attempt to solve both problems, respectively:
 
-* HLisp lifts markup to the function-level by compiling HTML as
-  ClojureScript source code, and by providing semantics that make the
-  resulting program composable with application logic at a unified
-  and wholly programmatic level.
+* HLisp lifts markup to the function-level by compiling HTML as a
+  ClojureScript source code, and by supplying semantics that make the
+  resulting program composable with application logic at a unified and
+  wholly programmatic level.
+
 * Javelin manages mutation and event collection, and provides
   semantics for maintaining application state using a model inspired
   by spreadsheets and techniques inspired by FRP.
