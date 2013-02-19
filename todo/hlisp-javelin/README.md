@@ -86,7 +86,8 @@ This suggests a very simple model for DOM interactions:
 
 With this model in place, the more general properties are as follows:
 
-* DOM elements are not created nor destroyed in the running of the application.
+* DOM elements are neither created nor destroyed in the running of the
+  application.
 * Connections between the DOM and the FRP state machine are
   [delegated](http://api.jquery.com/delegate/) and indirect.
 * There are no direct connections between elements. Usually such connections
