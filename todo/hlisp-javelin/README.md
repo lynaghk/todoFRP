@@ -64,6 +64,54 @@ application.
 * Selenium or PhantomJS etc. can be used to exercise the UI separately from
   the FRP part.
 
+## DOM Elements
+
+In an HLisp+Javelin application like this one, DOM elements have only one role:
+they are an I/O (Input/Output) mechanism. When the elements are first inserted
+into the page they are conveying output to the user. The user may then interact
+with the program, supplying input which is passed to the underlying FRP state
+machinery. Changes to the FRP state may then propagate via reactive behaviors
+to cause changes to DOM elements, thereby conveying this new output to the
+user.
+
+This suggests a very simple model for DOM interactions:
+
+* Input is collected via event listeners on the DOM elements. The event
+  handlers do nothing more than process the event and pass information to the
+  underlying FRP state machine.
+* Output is the result of FRP propagation from the state machine after a
+  change in the application's state.
+
+With this model in place, the more general properties are as follows:
+
+* DOM elements are not created nor destroyed in the running of the application.
+* Connections between the DOM and the FRP state machine are
+  [delegated](http://api.jquery.com/delegate/) and indirect.
+* There are no direct connections between elements. Usually such connections
+  are completely unnecessary. However, when elements must communicate they may
+  do so via the state machine, as I/O operations. There are examples of both
+  in this todo application.
+  
+This model simplifies DOM interactions considerably. In fact, this model can
+maybe be boiled down to a single principle: all state is contained in the
+underlying FRP machinery, and never in the DOM&mdash;the DOM serves only to
+collect input from the user and convey to them output from the state machine.
+
+### Spreadsheets
+
+The connection between FRP-backed web applications and spreadsheets is
+interesting. Spreadsheets are perhaps the most accessible and successful
+programming model we have today. Imagine a complex spreadsheet, coded by a
+skilled programmer. While the average user may not fully understand the
+formulas or how the spreadsheet really works, they can still make good use
+of the thing by simply changing the values of cells. Even more interesting is
+that this user can create all sorts of charts and visualizations of the data
+in the spreadsheet; reactive, interactive graphs and forms.
+
+This is pretty amazing. Perhaps frontend development can achieve some of the
+same success. The UI can perhaps be written as the "charts" that react to the
+underlying spreadsheet-like FRP state machine?
+
 ## Development
 
 Install [Leiningen2](https://github.com/technomancy/leiningen)
