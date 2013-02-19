@@ -1,18 +1,23 @@
 (ns todo
   (:require-macros
-    [hlisp.macros                 :refer [tpl def-elem def-values <- <<-]]
+    [hlisp.macros                 :refer [tpl]]
     [hlisp.reactive.macros        :refer [reactive-attributes]]
-    [tailrecursion.javelin.macros :refer [mirror cell mx]])
+    [tailrecursion.javelin.macros :refer [cell]])
   (:require
     [hlisp.reactive               :as d]
     [hlisp.util                   :refer [pluralize]]
     [tailrecursion.javelin        :as j]
-    [alandipert.storage-atom      :as sa]
-    [hlisp.util                   :as hu]))
+    [alandipert.storage-atom      :as sa]))
 
 ;; internal ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (declare route state active? deleted? completed?)
+
+(defn- route* [msec default]
+  (let [hash  #(.-hash (.-location js/window))
+        ret   (cell '(hash))]
+    (j/interval #(let [h (hash)] (reset! ret (if (empty? h) default h))) msec)
+    ret))
 
 (defn- update-state! [todos]
   (let [grouped (group-by deleted? todos)]
@@ -21,16 +26,14 @@
 (defn- loop-things [things f g container]
   (into container (mapv #(apply f % (g things %)) (range 0 (count @things)))))
 
-(defn- cellval [things i k]
-  (cell (get (nth things i) k)))
-
 (defn- cellvals [things i]
-  (conj (mapv (partial cellval things i) [:editing :completed :text])
-        (cell (let [thing (nth things i)]
-                (and (not (deleted? thing)) 
-                     (or (= "#/" route)
-                         (and (= "#/active" route) (active? thing))
-                         (and (= "#/completed" route) (completed? thing))))))))
+  (let [cellval #(cell (get (nth things i) %))]
+    (conj (mapv cellval [:editing :completed :text])
+          (cell (let [thing (nth things i)]
+                  (and (not (deleted? thing)) 
+                       (or (= "#/" route)
+                           (and (= "#/active" route) (active? thing))
+                           (and (= "#/completed" route) (completed? thing)))))))))
 
 (def deleted?     #(empty? (:text (if (map? %) % (nth @state %)))))
 (def completed?   #(:completed (if (map? %) % (nth @state %))))
@@ -38,7 +41,7 @@
 
 ;; public ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(def route (j/route* 50 "#/"))
+(def route (route* 50 "#/"))
 
 (let [dfl-state (vec (repeat 50 {:editing false :completed true :text ""}))] 
   (def state (sa/local-storage (cell dfl-state) ::store)))
