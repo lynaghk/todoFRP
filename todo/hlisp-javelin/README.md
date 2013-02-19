@@ -73,7 +73,7 @@ user may then interact with these elements (clicking on them, entering
 text into input boxes, etc.).  These interactions result in events which
 are the input passed to the underlying FRP state machinery. Changes to
 the FRP state may then propagate via reactive behaviors to cause changes
-to DOM elements, thereby conveying this new output to the user.
+to DOM elements, thereby conveying new output to the user.
 
 This suggests a very simple model for DOM interactions:
 
