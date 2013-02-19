@@ -12,7 +12,7 @@ An inplementation of [TodoMVC](http://todomvc.com) using
 
 Frontend development: there are many ways to skin this cat, and so far none
 of them seem to really provide the model we need. HLisp gives us a new model
-as a foundation for investigating new ways to build the frontend.
+as a foundation for experimenting with different ways of building the frontend.
 
 For this application I wrote the
 [hlisp-reactive](http://github.com/micha/hlisp-reactive/) library to tie
