@@ -12,11 +12,12 @@ An implementation of [TodoMVC](http://todomvc.com) using
 
 The primary problems inherent in frontend application development are:
 
-* The data-level DOM composes poorly with associated program-level
-  application logic.  Markup is data, not meaning.  Programs are
-  both.
+* *DOM-as-data* The data-level DOM composes poorly with associated program-level
+  application logic.  Markup-as-data has no meaning.  Programs are
+  more than just data&mdash;programs are _meaningful_ data.
 * The complexity imposed by JavaScript's asynchronous semantics
-  combined with the DOM event model.
+  combined with the DOM event model makes it difficult to specify
+  behaviors in terms of simpler, composable sub-behaviors.
 
 The combination of HLisp and Javelin used in this project represents
 an attempt to solve both problems, respectively:
