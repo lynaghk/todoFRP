@@ -89,7 +89,7 @@ With this model in place, the more general properties are as follows:
 * DOM elements are neither created nor destroyed in the running of the
   application.
 * Behaviors are set up once, when the page is first constructed, and remain in
-  place immutably for the entire running of the program.
+  place immutably. No new behaviors are attached while the program runs.
 * Connections between the DOM and the FRP state machine are
   [delegated](http://api.jquery.com/delegate/) and indirect.
 * There are no direct connections between elements. Usually such connections
