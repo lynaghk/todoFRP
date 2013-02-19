@@ -54,10 +54,9 @@ application.
 
 * The designer codes the markup and styling as they see fit, using simple
   reactive behavior attributes to wire up the UI elements to the state machine.
-  Here it is important to note that the designer does no programming
-  here&mdash;all that is required is to declaritively wire individual,
-  isolated elements in the markup to the exposed state machine cells and
-  functions.
+  It is important to note that the designer does no programming here&mdash;all
+  that is required is to declaritively wire individual, isolated elements in
+  the markup to the exposed state machine cells and functions.
 
 * Unit tests can be written to fully exercise the FRP part separately, while
   still encompassing all operations required by the application specs.
