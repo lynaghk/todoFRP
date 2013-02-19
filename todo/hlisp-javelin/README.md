@@ -55,13 +55,15 @@ a "programmer" and a "designer" working on the application.
   [src/include/index.cljs](src/include/index.cljs) file, which is
   spliced into the markup by the HLisp compiler via the `<include>`
   tag. The designer never needs to mess around in this file.
-* The programmer writes the FRP code in ClojureScript. This code encompasses
-  the complete logical state machine that is the operational specification of
-  the application. That is to say, the machinery that runs underneath the UI
-  (User Interface) and does the actual computing. It is worth noting that
-  the machinery here does not include any templates, DOM elements, DOM-as-data
-  ([hiccup](http://github.com/weavejester/hiccup), for example) or any other
-  reference to the DOM in any way.
+* The programmer writes the FRP code in ClojureScript. This code
+  encompasses the complete logical state machine that is the
+  operational specification of the application. That is to say, the
+  machinery that runs underneath the UI (User Interface) and does the
+  actual computing. It is worth noting that the machinery here does
+  not include any templates, DOM elements, DOM-as-data
+  ([hiccup](http://github.com/weavejester/hiccup), for example) or any
+  other reference to the DOM in any way. We consider selectors an
+  antipattern and they are unnecessary in HLisp applications.
 * The programmer exposes and documents all FRP cells and state-mutating
   functions, and delivers the application to the designer. The programmer may
   even provide a simple wireframe as a starting point for the designer, if
