@@ -71,10 +71,12 @@ a "programmer" and a "designer" working on the application.
   may definitively modify any element by editing
   [index.html](src/html/index.html). The programmer doesn't ever need
   to touch this file.
+
 * The FRP code that sets up the application state is all in the
   [src/include/index.cljs](src/include/index.cljs) file, which is
   spliced into the markup by the HLisp compiler via the `<include>`
   tag. The designer never needs to mess around in this file.
+
 * The programmer writes the FRP code in ClojureScript. This code
   encompasses the complete logical state machine that is the
   operational specification of the application. That is to say, the
@@ -84,17 +86,21 @@ a "programmer" and a "designer" working on the application.
   ([hiccup](http://github.com/weavejester/hiccup), for example) or any
   other reference to the DOM in any way. We consider selectors an
   antipattern and they are unnecessary in HLisp applications.
+
 * The programmer exposes and documents all FRP cells and state-mutating
   functions, and delivers the application to the designer. The programmer may
   even provide a simple wireframe as a starting point for the designer, if
   they like.
+
 * The designer codes the markup and styling as they see fit, using simple
   reactive behavior attributes to wire up the UI elements to the state machine.
   It is important to note that the designer does no programming here&mdash;all
   that is required is to declaritively wire individual, isolated elements in
   the markup to the exposed state machine cells and functions.
+
 * Unit tests can be written to fully exercise the FRP part separately, while
   still encompassing all operations required by the application specs.
+
 * Selenium or PhantomJS etc. can be used to exercise the UI separately from
   the FRP part.
 
@@ -114,6 +120,7 @@ This suggests a very simple model for DOM interactions:
 * Input is collected via event listeners on the DOM elements. The event
   handlers do nothing more than process the event and pass information to
   the underlying FRP state machine.
+
 * Output is the result of FRP propagation from the state machine after a
   change in the application's state and is conveyed to the user by updating
   properties of the DOM elements (id, class, css properties, etc.).
@@ -122,10 +129,13 @@ With this model in place, the more general properties are as follows:
 
 * DOM elements are neither created nor destroyed in the running of the
   application.
+
 * Behaviors are set up once, when the page is first constructed, and remain in
   place immutably. No behaviors are attached or removed while the program runs.
+
 * Connections between the DOM and the FRP state machine are
   [delegated](http://api.jquery.com/delegate/) and indirect.
+
 * There are no direct connections between elements. When elements must
   communicate they do so via the state machine as I/O operations.
   
