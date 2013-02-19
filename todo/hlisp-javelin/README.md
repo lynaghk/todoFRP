@@ -18,7 +18,10 @@ The primary problems inherent in frontend application development are:
   more than just data&mdash;programs are _meaningful_ data. Extracting
   elements from the DOM using selectors, manipulating hiccup data as
   DOM fragments, templates, etc. are all as-data representations
-  completely devoid of meaning.
+  completely devoid of meaning. This lack of intrinsic meaning results
+  in a situtuation where every part of the program that touches the
+  data must know how to understand the data, completely defeating all
+  of the usual techniques of achieving separation of concerns.
 
 * **Watchers and callbacks** <br>
   The complexity imposed by JavaScript's asynchronous semantics
