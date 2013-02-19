@@ -17,8 +17,9 @@
   (let [grouped (group-by deleted? todos)]
     (reset! state (into (get grouped false) (get grouped true)))))
 
-(defn- loop-things [things f g container]
-  (into container (mapv #(apply f % (g things %)) (range 0 (count @things)))))
+(defn- thing-looper [things g]
+  (fn [f container]
+    (into container (mapv #(apply f % (g things %)) (range 0 (count @things))))))
 
 (defn- cellvals [things i]
   (let [cellval #(cell (get (nth things i) %))]
@@ -35,18 +36,14 @@
 
 ;; public ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(def route (j/route* 50 "#/"))
-
 (let [dfl-state (vec (repeat 50 {:editing false :completed true :text ""}))] 
-  (def state (sa/local-storage (cell dfl-state) ::store)))
-
-(def editing-new  (cell ""))
-(def live-ones    (cell (filter (complement deleted?) state)))
-(def completed    (cell (filter completed? live-ones)))
-(def active       (cell (filter (complement completed?) live-ones)))
-
-(defn loop-todos [f container]
-  (loop-things state f cellvals container))
+  (def state        (sa/local-storage (cell dfl-state) ::store))
+  (def route        (j/route* 50 "#/")) 
+  (def loop-todos   (thing-looper state cellvals)) 
+  (def editing-new  (cell "")) 
+  (def live-ones    (cell (filter (complement deleted?) state))) 
+  (def completed    (cell (filter completed? live-ones))) 
+  (def active       (cell (filter (complement completed?) live-ones)))) 
 
 (defn clear [item]
   (assoc item :editing false :completed false :text ""))
