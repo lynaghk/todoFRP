@@ -29,13 +29,11 @@ an attempt to solve both problems, respectively:
   dependency-ordered way using techniques inspired by the way
   spreadsheets work.
 
-For this application I wrote the
-[hlisp-reactive](http://github.com/micha/hlisp-reactive/) library to
-tie HLisp and Javelin together. This library provides a macro that
-gives the designer the ability to attach reactive behaviors to
-elements in the markup, similar to
-[angularjs](http://angularjs.org). Javelin provides the FRP
-(Functional Reactive Programming) underpinnings.
+The [hlisp-reactive](http://github.com/micha/hlisp-reactive/) library is an
+attempt to tie HLisp and Javelin together. It provides a macro that gives
+the designer the ability to attach reactive behaviors to elements in the
+markup, similar to [angularjs](http://angularjs.org). Javelin provides
+the FRP (Functional Reactive Programming) underpinnings.
 
 ## Workflow
 
