@@ -92,10 +92,8 @@ With this model in place, the more general properties are as follows:
   place immutably. No behaviors are attached or removed while the program runs.
 * Connections between the DOM and the FRP state machine are
   [delegated](http://api.jquery.com/delegate/) and indirect.
-* There are no direct connections between elements. Usually such connections
-  are completely unnecessary. However, when elements must communicate they may
-  do so via the state machine, as I/O operations. There are examples of both
-  in this todo application.
+* There are no direct connections between elements. When elements must
+  communicate they may do so via the state machine, as I/O operations.
   
 This model simplifies DOM interactions considerably. In fact, this model can
 maybe be boiled down to a single principle: all state is contained in the
