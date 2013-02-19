@@ -13,12 +13,6 @@
 
 (declare route state active? deleted? completed?)
 
-(defn- route* [msec default]
-  (let [hash  #(.-hash (.-location js/window))
-        ret   (cell '(hash))]
-    (j/interval #(let [h (hash)] (reset! ret (if (empty? h) default h))) msec)
-    ret))
-
 (defn- update-state! [todos]
   (let [grouped (group-by deleted? todos)]
     (reset! state (into (get grouped false) (get grouped true)))))
@@ -41,7 +35,7 @@
 
 ;; public ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(def route (route* 50 "#/"))
+(def route (j/route* 50 "#/"))
 
 (let [dfl-state (vec (repeat 50 {:editing false :completed true :text ""}))] 
   (def state (sa/local-storage (cell dfl-state) ::store)))
