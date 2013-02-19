@@ -93,7 +93,7 @@ With this model in place, the more general properties are as follows:
 * Connections between the DOM and the FRP state machine are
   [delegated](http://api.jquery.com/delegate/) and indirect.
 * There are no direct connections between elements. When elements must
-  communicate they may do so via the state machine, as I/O operations.
+  communicate they do so via the state machine, as I/O operations.
   
 This model simplifies DOM interactions considerably. In fact, this model can
 maybe be boiled down to a single principle: all state is contained in the
