@@ -47,6 +47,8 @@ an attempt to solve both problems, respectively:
   semantics for maintaining application state using a model inspired
   by spreadsheets and techniques inspired by FRP.
 
+### HLisp-Reactive
+
 The [hlisp-reactive](http://github.com/micha/hlisp-reactive/) library
 is an attempt to tie HLisp and Javelin together. It provides the
 `reactive-attributes` macro that gives the designer the ability to
