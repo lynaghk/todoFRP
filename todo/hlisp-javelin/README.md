@@ -18,23 +18,32 @@ The primary problems inherent in frontend application development are:
   more than just data&mdash;programs are _meaningful_ data. Extracting
   elements from the DOM using selectors, manipulating hiccup data as
   DOM fragments, templates, etc. are all as-data representations
-  completely devoid of meaning. This lack of intrinsic meaning results
-  in a situtuation where every part of the program that touches the
-  data must know how to understand the data, completely defeating all
-  of the usual techniques of achieving separation of concerns.
+  completely devoid of meaning. These opaque blobs of data are passed
+  around from one part of the program to the next. Each part accepts
+  the blob, analyzes it, performs its operation and returns another
+  opaque blob. At this interface crucial information is lost. The end
+  result is that the usual techniques for breaking down programs and
+  separation of concerns don't work, because the parts of the program
+  must share so much implementation (implementation which is mainly
+  just to build a consistent meaning on these opaque blobs).
 
 * **Watchers and callbacks** <br>
   The complexity imposed by JavaScript's asynchronous semantics
   combined with the DOM event model makes it difficult to specify
-  behaviors in terms of simpler, composable sub-behaviors.
+  behaviors in terms of simpler, composable sub-behaviors. Callbacks
+  return void; there is no way to compose them to build more complex
+  behaviors.
 
 The combination of HLisp and Javelin used in this project represents
 an attempt to solve both problems, respectively:
 
-* HLisp lifts markup to the program-level by compiling HTML as
+* **Markup is Lisp code** <br>
+  HLisp lifts markup to the program-level by compiling HTML as
   ClojureScript source code, and by supplying semantics that allow the
   resulting program to unify cleanly with application logic.
-* Javelin manages mutation and event collection, and provides
+
+* **The application is a reactive state machine** <br>
+  Javelin manages mutation and event collection, and provides
   semantics for maintaining application state using a model inspired
   by spreadsheets and techniques inspired by FRP.
 
