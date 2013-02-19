@@ -37,20 +37,23 @@ the FRP (Functional Reactive Programming) underpinnings.
 
 ## Workflow
 
-There are two files of interest: `src/html/index.html` and
-`src/include/index.cljs`. Those are combined in the HLisp compiler to create
-the final `index.html` and `main.js` files that comprise the application. It
-is assumed that there will be a "programmer" and a "designer" working on
-the application.
+There are two files of interest:
+[src/html/index.html](src/html/index.html) and
+[src/include/index.cljs](src/include/index.cljs). Those are combined
+in the HLisp compiler to create the final `index.html` and `main.js`
+files that comprise the application. It is assumed that there will be
+a "programmer" and a "designer" working on the application.
 
-* The markup is all in the `index.html` file. There is no ClojureScript code
-  creating elements or anything like that. The designer can change any element
-  in the final page by editing `src/html/index.html`. The programmer doesn't
-  ever need to touch this file.
+* The markup is all in the [index.html](src/html/index.html)
+  file. There is no ClojureScript application code creating elements
+  or otherwise manipulating the DOM outside of this file. The designer
+  may definitively modify any element by editing
+  [index.html](src/html/index.html). The programmer doesn't ever need
+  to touch this file.
 * The FRP code that sets up the application state is all in the
-  `src/include/index.cljs` file, which is spliced into the markup by the HLisp
-  compiler via the `<include>` tag. The designer never needs to mess around in
-  this file.
+  [src/include/index.cljs](src/include/index.cljs) file, which is
+  spliced into the markup by the HLisp compiler via the `<include>`
+  tag. The designer never needs to mess around in this file.
 * The programmer writes the FRP code in ClojureScript. This code encompasses
   the complete logical state machine that is the operational specification of
   the application. That is to say, the machinery that runs underneath the UI
