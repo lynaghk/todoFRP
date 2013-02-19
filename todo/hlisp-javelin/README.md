@@ -81,7 +81,7 @@ This suggests a very simple model for DOM interactions:
   handlers do nothing more than process the event and pass information to
   the underlying FRP state machine.
 * Output is the result of FRP propagation from the state machine after a
-  change in the application's state, and is conveyed to the user by updating
+  change in the application's state and is conveyed to the user by updating
   properties of the DOM elements (id, class, css properties, etc.).
 
 With this model in place, the more general properties are as follows:
