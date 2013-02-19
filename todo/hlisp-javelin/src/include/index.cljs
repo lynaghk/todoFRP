@@ -33,20 +33,18 @@
 (def deleted?     #(empty? (:text (if (map? %) % (nth @state %)))))
 (def completed?   #(:completed (if (map? %) % (nth @state %))))
 (def active?      #(and (not (deleted? %)) (not (completed? %))))
+(def clear        #(assoc % :editing false :completed false :text "")) 
+(def dfl-state    (vec (repeat 50 {:editing false :completed true :text ""}))) 
 
 ;; public ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(let [dfl-state (vec (repeat 50 {:editing false :completed true :text ""}))] 
-  (def state        (sa/local-storage (cell dfl-state) ::store))
-  (def route        (j/route* 50 "#/")) 
-  (def loop-todos   (thing-looper state cellvals)) 
-  (def editing-new  (cell "")) 
-  (def live-ones    (cell (filter (complement deleted?) state))) 
-  (def completed    (cell (filter completed? live-ones))) 
-  (def active       (cell (filter (complement completed?) live-ones)))) 
-
-(defn clear [item]
-  (assoc item :editing false :completed false :text ""))
+(def state        (sa/local-storage (cell dfl-state) ::store))
+(def route        (j/route* 50 "#/")) 
+(def loop-todos   (thing-looper state cellvals)) 
+(def editing-new  (cell "")) 
+(def live-ones    (cell (filter (complement deleted?) state))) 
+(def completed    (cell (filter completed? live-ones))) 
+(def active       (cell (filter (complement completed?) live-ones)))
 
 (defn new-item! [text]
   (if (not (empty? text))
