@@ -1,0 +1,17 @@
+/target
+/lib
+/classes
+/checkouts
+/hlwork
+/resources
+pom.xml
+*.swn
+*.swo
+*.swp
+*.jar
+*.class
+.lein-deps-sum
+.lein-failures
+.lein-plugins
+.DS_Store
+/test/test.js
