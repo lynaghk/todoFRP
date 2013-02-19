@@ -40,11 +40,11 @@
 
 (def state        (sa/local-storage (cell dfl-state) ::store))
 (def route        (j/route* 50 "#/")) 
-(def loop-todos   (thing-looper state cellvals)) 
 (def editing-new  (cell "")) 
 (def live-ones    (cell (filter (complement deleted?) state))) 
 (def completed    (cell (filter completed? live-ones))) 
 (def active       (cell (filter (complement completed?) live-ones)))
+(def loop-todos   (thing-looper state cellvals)) 
 
 (defn new-item! [text]
   (if (not (empty? text))
