@@ -42,7 +42,10 @@ application.
 * The programmer writes the FRP code in ClojureScript. This code encompasses
   the complete logical state machine that is the operational specification of
   the application. That is to say, the machinery that runs underneath the UI
-  (User Interface) and does the actual computing.
+  (User Interface) and does the actual computing. It is worth noting that
+  the machinery here does not include any templates, DOM elements, DOM-as-data
+  ([hicup](http://github.com/weavejester/hiccup), for example) or any other
+  reference to the DOM in any way.
 
 * The programmer exposes and documents all FRP cells and state-mutating
   functions, and delivers the application to the designer.
