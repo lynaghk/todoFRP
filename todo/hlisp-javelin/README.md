@@ -12,24 +12,24 @@ An inplementation of [TodoMVC](http://todomvc.com) using
 
 The primary problems of frontend application development are:
 
-1. The data-level DOM composes poorly with function-level application
-   logic.  Markup is data, not meaning.
+* The data-level DOM composes poorly with function-level application
+  logic.  Markup is data, not meaning.
 
-2. The complexity imposed by JavaScript's asynchronous semantics
-   combined with the DOM event model.
+* The complexity imposed by JavaScript's asynchronous semantics
+  combined with the DOM event model.
 
 The combination of HLisp and Javelin used in this project represents
 an attempt to solve both problems, respectively:
 
-1. HLisp lifts markup to the function-level by compiling HTML as
-   ClojureScript source code, and by providing semantics that make the
-   resulting program composable with application logic at a clean,
-   programmatic level.
+* HLisp lifts markup to the function-level by compiling HTML as
+  ClojureScript source code, and by providing semantics that make the
+  resulting program composable with application logic at a clean,
+  programmatic level.
 
-2. Javelin manages mutation and event collection, and provides
-   semantics for maintaining and updating application state in clean,
-   dependency-ordered way using techniques inspired by the way
-   spreadsheets work.
+* Javelin manages mutation and event collection, and provides
+  semantics for maintaining and updating application state in clean,
+  dependency-ordered way using techniques inspired by the way
+  spreadsheets work.
 
 For this application I wrote the
 [hlisp-reactive](http://github.com/micha/hlisp-reactive/) library to
