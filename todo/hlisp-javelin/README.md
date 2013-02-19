@@ -24,10 +24,10 @@ FRP (Functional Reactive Programming) underpinnings.
 ## Workflow
 
 There are two files of interest: `src/html/index.html` and
-`src/include/index.cljs`. Those are combined in the compiler to create the
-final `index.html` and `main.js` files that comprise the application. It is
-assumed that there will be a "programmer" and a "designer" working on the
-application.
+`src/include/index.cljs`. Those are combined in the HLisp compiler to create
+the final `index.html` and `main.js` files that comprise the application. It
+is assumed that there will be a "programmer" and a "designer" working on
+the application.
 
 * The markup is all in the `index.html` file. There is no ClojureScript code
   creating elements or anything like that. The designer can change any element
