@@ -17,10 +17,6 @@
   (let [grouped (group-by deleted? todos)]
     (reset! state (into (get grouped false) (get grouped true)))))
 
-(defn- thing-looper [things g]
-  (fn [f container]
-    (into container (mapv #(apply f % (g things %)) (range 0 (count @things))))))
-
 (defn- cellvals [things i]
   (let [cellval #(cell (get (nth things i) %))]
     (conj (mapv cellval [:editing :completed :text])
@@ -44,7 +40,7 @@
 (def live-ones    (cell (filter (complement deleted?) state))) 
 (def completed    (cell (filter completed? live-ones))) 
 (def active       (cell (filter (complement completed?) live-ones)))
-(def loop-todos   (thing-looper state cellvals)) 
+(def loop-todos   (d/thing-looper state cellvals)) 
 
 (defn new-item! [text]
   (if (not (empty? text))
