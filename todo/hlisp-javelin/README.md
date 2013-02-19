@@ -70,7 +70,9 @@ a "programmer" and a "designer" working on the application.
   or otherwise manipulating the DOM outside of this file. The designer
   may definitively modify any element by editing
   [index.html](src/html/index.html). The programmer doesn't ever need
-  to touch this file.
+  to touch this file&mdash;they use no selectors and create no DOM
+  elements, so nothing in the HTML markup can adversely affect the
+  program.
 
 * The FRP code that sets up the application state is all in the
   [src/include/index.cljs](src/include/index.cljs) file, which is
