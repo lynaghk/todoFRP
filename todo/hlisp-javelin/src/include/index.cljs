@@ -17,14 +17,14 @@
   (let [grouped (group-by deleted? todos)]
     (reset! state (into (get grouped false) (get grouped true)))))
 
-(defn- cellvals [things i]
-  (let [cellval #(cell (get (nth things i) %))]
+(defn- reactive-info [todos i]
+  (let [cellval #(cell (get (nth todos i) %))]
     (conj (mapv cellval [:editing :completed :text])
-          (cell (let [thing (nth things i)]
-                  (and (not (deleted? thing)) 
+          (cell (let [todo (nth todos i)]
+                  (and (not (deleted? todo)) 
                        (or (= "#/" route)
-                           (and (= "#/active" route) (active? thing))
-                           (and (= "#/completed" route) (completed? thing)))))))))
+                           (and (= "#/active" route) (active? todo))
+                           (and (= "#/completed" route) (completed? todo)))))))))
 
 (def deleted?     #(empty? (:text (if (map? %) % (nth @state %)))))
 (def completed?   #(:completed (if (map? %) % (nth @state %))))
@@ -40,7 +40,7 @@
 (def live-ones    (cell (filter (complement deleted?) state))) 
 (def completed    (cell (filter completed? live-ones))) 
 (def active       (cell (filter (complement completed?) live-ones)))
-(def loop-todos   (thing-looper state cellvals)) 
+(def loop-todos   (thing-looper state reactive-info)) 
 
 (defn new-item! [text]
   (if (not (empty? text))
