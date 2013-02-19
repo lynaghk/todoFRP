@@ -31,10 +31,10 @@ an attempt to solve both problems, respectively:
 
 The [hlisp-reactive](http://github.com/micha/hlisp-reactive/) library
 is an attempt to tie HLisp and Javelin together. It provides the
-`reactive-attributes` macro that gives the designer the ability
-to attach reactive behaviors to elements in the markup, similar to
-[angularjs](http://angularjs.org). Javelin provides the FRP (Functional
-Reactive Programming) underpinnings.
+`reactive-attributes` macro that gives the designer the ability to
+attach reactive behaviors to elements in the markup, in a way similar
+to [angularjs](http://angularjs.org). Javelin provides the FRP
+(Functional Reactive Programming) underpinnings.
 
 ## Workflow
 
