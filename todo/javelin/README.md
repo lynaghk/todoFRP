@@ -5,7 +5,7 @@ An implementation of ToDoFRP using [Javelin](https://github.com/tailrecursion/ja
 
 ## Demo
 
-[View the demo here.](http://priornix.github.com/todoFRP/todo/javelin/pubic/index.html)
+[View the demo here.](http://priornix.github.com/todoFRP/todo/javelin/public/index.html)
 
 ## Build
 
