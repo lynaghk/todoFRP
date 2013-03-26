@@ -20,12 +20,13 @@ Open `public/index.html` in your favorite browser.
 Javelin drives the functional reactive programming of this project.
 
 The full todo list is stored in the `todo` cell and other cells then react
-to changes to this cell: 
+to changes to this cell value. When the `todo` cell value changes: 
 
 * The todo list is rendered in `show-todos`
 * `save-todos!` is called to persist the todo list to localStorage
-* Changes the values of the `active-items` and `completed-items`
-  cells, which in turn changes the active and completed display count 
+* The values of the `active-items` and `completed-items`
+  cells are changed, which in turn updates the active and completed
+  display count.
 
 ## Routing
 
@@ -43,6 +44,6 @@ equivalent libraries as required.
 
 ## License
 
-Copyright © 2013 `Michael Lim`(http://github.com/priornix)
+Copyright © 2013 [Michael Lim](http://github.com/priornix)
 
 Distributed under the Eclipse Public License, the same as Clojure.
