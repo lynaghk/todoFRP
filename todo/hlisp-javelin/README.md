@@ -18,21 +18,11 @@ Install dependencies:
 
 You can start watcher-based ClojureScript compilation:
 
-    script/autobuild
+    lein hlisp auto
 
 HTML and JavaScript files will be created in the `resources/public` directory.
+You can view the demo via file:///path/to/resources/public/index.html.
 
 ### Note
 
-When compiling the application you may come across some errors similar to this
-one:
-
-    line 1 column 807 - Error: <section> is not recognized!
-
-It's okay. This is just the HTML-tidy library failing to pretty-print some
-optional HTML (HTML-tidy doesn't know how to deal with HTML5 elements). It's
-nothing to worry about.
-
-If things get weird, deleting the `hlwork` directory and restarting the 
-compiler usually helps. (This is where the HLisp compiler creates its work
-tree.)
+If things get weird, restarting `lein hlisp auto` usually helps.

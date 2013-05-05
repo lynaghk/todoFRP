@@ -16,7 +16,7 @@
       <section id="todoapp">
         <header id="header">
           <h1>todos</h1>
-          <form do='(d/on! :submit #(do (new-item! @editing-new)
+          <form do='(d/on! :submit #(do (add-item! @editing-new)
                                         (reset! editing-new "")))'>
             <input id="new-todo" placeholder="What needs to be done?" autofocus
                    do='(d/value! editing-new)
@@ -46,7 +46,7 @@
                          do="(d/attr! :checked is-completed)
                              (d/on! :click #(set-completed! idx (d/value! (.-target %))))">
                   <label do="(d/text! text)"/>
-                  <button class="destroy" do='(d/on! :click #(set-text! idx ""))'/>
+                  <button class="destroy" do='(d/on! :click #(remove-item! idx))'/>
                 </div>
                 <form do="(d/on! :submit #(set-editing! idx false))">
                   <input class="edit"
